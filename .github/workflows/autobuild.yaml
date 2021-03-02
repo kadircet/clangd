@@ -39,28 +39,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - name: windows
-          os: windows-latest
-          preinstall: choco install ninja nasm
-          vcvars: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat
-          cflags: /O2 /DNDEBUG
-          cmake: >
-            "-DCMAKE_C_COMPILER=cl"
-            "-DCMAKE_CXX_COMPILER=cl"
-            "-DLLVM_ENABLE_ZLIB=OFF"
-            "-DLLVM_USE_CRT_RELEASE=MT"
-          grpc_cmake: >
-            "-DgRPC_MSVC_STATIC_RUNTIME=ON"
-          binary_extension: ".exe"
-        - name: mac
-          os: macos-latest
-          preinstall: brew install ninja zlib p7zip
-          cflags: -O3 -gline-tables-only -DNDEBUG
-          env: MACOSX_DEPLOYMENT_TARGET=10.9
-          cmake: >
-            "-DCMAKE_C_COMPILER=clang"
-            "-DCMAKE_CXX_COMPILER=clang++"
-            "-DLLVM_ENABLE_ZLIB=FORCE_ON"
         - name: linux
           os: ubuntu-latest
           preinstall: sudo apt-get install ninja-build libz-dev libc-ares-dev
@@ -117,7 +95,8 @@ jobs:
         "-DCMAKE_BUILD_TYPE=Release"
         "-DCMAKE_C_FLAGS_RELEASE=${{ matrix.config.cflags }}"
         "-DCMAKE_CXX_FLAGS_RELEASE=${{ matrix.config.cflags }}"
-        ${{ matrix.config.grpc_cmake }} ${{ matrix.config.cmake }}
+        ${{ matrix.config.cmake }}
+        ${{ matrix.config.grpc_cmake }}
 
         ninja -C grpc-build install
     - name: Fetch target commit
