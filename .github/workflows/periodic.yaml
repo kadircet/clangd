@@ -46,7 +46,7 @@ jobs:
       id: release
       env: { GITHUB_TOKEN: "${{ secrets.RELEASE_TOKEN }}" }
       with:
-        tag_name: snapshot_${{ env.RELEASE_DATE }}
+        tag_name: 12.0.0
         release_name: ${{ env.RELEASE_DATE }} @${{ env.RELEASE_COMMIT_SHORT }}
         body: |
           Unstable snapshot of clangd on ${{ env.RELEASE_DATE }}.
