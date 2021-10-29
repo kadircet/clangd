@@ -139,6 +139,7 @@ jobs:
     needs: create_release
     if: always() && needs.create_release.result == 'success'
     runs-on: ${{ matrix.config.os }}
+    env: ${{ matrix.env }}
     strategy:
       fail-fast: false
       matrix:
