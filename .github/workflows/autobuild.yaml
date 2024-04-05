@@ -221,7 +221,7 @@ jobs:
         # We use the same version of gRPC for LLVM's clangd-ubuntu-tsan
         # buildbot.
         # https://github.com/llvm/llvm-zorg/blob/main/buildbot/google/docker/buildbot-clangd-ubuntu-clang/Dockerfile
-        ref: v1.36.3
+        ref: v1.48.4
         submodules: recursive
     - name: Build gRPC
       run: >
@@ -285,6 +285,7 @@ jobs:
         "-DCLANGD_ENABLE_REMOTE=ON"
         "-DLLVM_ENABLE_ZSTD=OFF"
         "-DGRPC_INSTALL_PATH=$HOME/grpc-installation"
+        "-DCMAKE_PREFIX_PATH=$HOME/grpc-installation"
         ${{ matrix.config.cmake }}
     - name: Ninja
       run: >
